@@ -1,0 +1,67 @@
+<template>
+<lightning-card>
+<!-- <lightning-tabset>
+<lightning-tab label="Schedule"> -->
+    <div class={sectionClass}>
+        <h3 class="slds-section__title">
+        <button class="slds-button slds-section__title-action" onclick={handleClick}>
+        <lightning-icon
+         icon-name="utility:switch"
+         class="slds-button__icon slds-button__icon_left slds-section__title-action-icon"
+         size="x-small"></lightning-icon>
+        <span class="slds-truncate" title="Schedule">Schedule</span></button>
+        </h3>
+        <div class="slds-section__content">
+    <template if:false={showSection}>
+        <lightning-button  class="slds-m-left_x-small" style="padding-left: 45pc;" variant="brand" 
+            onclick={SectionEnable} name="Edit" label="Edit"></lightning-button>
+        <lightning-record-view-form
+            record-id={recordId}
+            object-api-name={objectApiName}>
+        <div class="slds-grid">
+        <div style="float:left;padding-left: 2pc;padding-right: 1pc;width: 45%;">
+            <div class="slds-border_bottom"><lightning-output-field field-name="Project_Request_Date__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="Review_Date2__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="Production_Date__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="Ship_Date__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="Campaign_Live_Date__c"></lightning-output-field></div>
+        </div>
+        <div style="float:left;padding-left: 1pc;padding-right: 2pc;width: 55%;">
+            <div class="slds-border_bottom"><lightning-output-field field-name="Review_Date__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="Comp_Review_Date__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="VG_Internal_Ship_Date__c"></lightning-output-field></div>
+            <div class="slds-border_bottom"><lightning-output-field field-name="Livedate__c"></lightning-output-field></div>
+        </div>
+        </div>      
+        </lightning-record-view-form>
+        </template>
+        </div>
+        </div>
+        <template if:true={showSection}>				
+        <lightning-record-edit-form   record-id={recordId} object-api-name={objectApiName} onsuccess={handleSuccess} 
+            onsubmit ={handleSubmit}> 
+        <div class="slds-grid" style="padding-left: 2pc;"> 
+            <lightning-messages></lightning-messages>
+            <div style="float:left;width: 40%;">
+            <lightning-input-field field-name="Project_Request_Date__c"></lightning-input-field>
+            <lightning-input-field field-name="Review_Date2__c"></lightning-input-field>
+            <lightning-input-field field-name="Production_Date__c"></lightning-input-field>
+            <lightning-input-field field-name="Ship_Date__c"></lightning-input-field>
+            <lightning-input-field field-name="Campaign_Live_Date__c"></lightning-input-field>
+            </div>
+        <div style="float:left;width: 60%;;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field field-name="Review_Date__c"></lightning-input-field>
+            <lightning-input-field field-name="Comp_Review_Date__c"></lightning-input-field>
+            <lightning-input-field field-name="VG_Internal_Ship_Date__c"></lightning-input-field>
+            <lightning-input-field field-name="Livedate__c"></lightning-input-field>
+            </div> 
+            </div>
+       <div class="slds-border_bottom"></div><br>
+         <lightning-button variant="Neutral" label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small" style="padding-left: 20pc;"></lightning-button>
+        <lightning-button variant="brand" label="Save" type="submit" title="Save" class="slds-m-left_x-small"></lightning-button>
+        </lightning-record-edit-form>
+        </template>
+<!-- </lightning-tab>
+</lightning-tabset>       -->
+</lightning-card>
+</template>

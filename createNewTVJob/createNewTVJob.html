@@ -1,0 +1,729 @@
+<template>
+  <lightning-quick-action-panel header="Main Details">
+<!--First layout-->
+<!--
+    <h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+      <span class="slds-align_absolute-center" title="Section Title"><b>Main Details</b></span>
+      </h3>
+  
+  <div class="slds-align_absolute-center" style="height:3rem">
+    <lightning-button variant="brand" label="Save" title="Save" onclick={saveNewTVJob} class="slds-m-left_x-small"></lightning-button>
+    <lightning-button variant="Neutral" label="Cancel" title="Cancel" onclick={cancel} class="slds-m-left_x-small"></lightning-button>
+    </div>
+-->
+    <h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+      <div class="slds-clearfix">
+        <b style="padding-left:2pc;">Title</b>
+        <div class="slds-float_right">
+          <p><b style="color:red;margin-left:770px;">* </b>= Required Information</p>
+        </div>
+        </div>
+      </h3>
+      <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+        <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">  
+          <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+                <lightning-input label="Job Title" data-field-name="Name"></lightning-input>
+        </div>
+        </div>
+              <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+                <div class="slds-align_absolute-center">
+                <div class="slds-col slds-size_3-of-4">
+                <template if:true={specificTypeValues.data}>
+                      <lightning-combobox
+                      name="SpecificType"
+                      label="Specific Type"
+                      value={selectedSpecificType}
+                      options={specificTypeValues.data.values}
+                      placeholder="-- None --"
+                      onchange={handleType}
+                      data-field-name="Type__c"
+                      class="specifictypeCls"
+                      required></lightning-combobox>
+                    </template>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+                <div class="slds-col slds-size_3-of-4" style="width:92%;padding-right: 1pc;padding-left: 2pc;">
+                <lightning-input label="Other Type" data-field-name="Type_Other__c" name="OtherType"></lightning-input>
+                </div>
+              </div>
+      </div><br>
+<!--Second Layout-->
+<h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+  <div style="float:left;padding-left: 1pc;padding-right: 1pc;"></div>
+  <span class="slds-align_absolute-left" title="Section Title"><b>Internal Information</b></span>
+  </h3>
+  <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">  
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+            <lightning-input label="Job #" data-field-name="jobnumber__c"></lightning-input>
+    </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+            <lightning-input label="TDA Billing %" data-field-name="TDA_Billing__c"></lightning-input>
+          </div>
+        </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="FieldRUserType"
+            label="Field R"
+            value={selectedUserTypePickList1}
+            placeholder="Select User Type"
+            options={UserTypePickList1}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="FieldR"
+            label=""
+            value={selectedFieldR}
+            placeholder="Select Field R"
+            options={UsersPickList1}
+            onchange={handleChange}
+            data-field-name="Field_R__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          </div>
+        </div>                
+</div>
+<!--Line 1 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+        <lightning-combobox
+        name="Master Job"
+        label="Master Job"
+        value={selectedMasterJob}
+        placeholder="Select Master Job"
+        options={masterJobOptions}
+        onchange={handleChange}
+        data-field-name="Master_Job__c"
+        class="slds-var-m-bottom_small" ></lightning-combobox>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+            <lightning-input label="Billable Date" type="date" data-field-name="Billable_Date__c"></lightning-input>
+    </div>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="OppsRUserType"
+            label="Opps R"
+            value={selectedUserTypePickList2}
+            placeholder="Select User Type"
+            options={UserTypePickList2}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="OppsR"
+            label=""
+            value={selectedOppsR}
+            placeholder="Select Opps R"
+            options={UsersPickList2}
+            onchange={handleChange}
+            data-field-name="Opps_R__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>                    
+</div>
+<!--Line 2 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+        <lightning-combobox
+        name="Campaign"
+        label="Campaign"
+        value={selectedCampaign}
+        placeholder="Select Campaign"
+        options={campaignOptions}
+        onchange={handleChange}
+        data-field-name="Creativeconcept__c"
+        class="slds-var-m-bottom_small" ></lightning-combobox>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+            <lightning-input label="Budget" type="number" formatter="currency" data-field-name="Budget__c"></lightning-input>
+      </div>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="ProducerUserType"
+            label="Producer"
+            value={selectedUserTypePickList3}
+            placeholder="Select User Type"
+            options={UserTypePickList3}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="Producer"
+            label=""
+            value={selectedProducer}
+            placeholder="Select Producer"
+            options={UsersPickList3}
+            onchange={handleChange}
+            data-field-name="Producer__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>                    
+</div>
+<!--Line 3 End  -->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+      <lightning-combobox
+      name="Market"
+      label="Market"
+      value={selectedMarket}
+      placeholder="Select Market"
+      options={marketOptions}
+      onchange={handleChange}
+      data-field-name="Market__c"
+      class="slds-var-m-bottom_small marketCls"
+      required></lightning-combobox>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+            <lightning-input label="Actual" type="number" formatter="currency" data-field-name="Actual__c"></lightning-input>
+      </div>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="ArtDirectorUserType"
+            label="Art Director"
+            value={selectedUserTypePickList4}
+            placeholder="Select User Type"
+            options={UserTypePickList4}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="ArtDirector"
+            label=""
+            value={selectedArtDirector}
+            placeholder="Select Art Director"
+            options={UsersPickList4}
+            onchange={handleChange}
+            data-field-name="Art_Director__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>                    
+</div>
+<!--Line 4 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+      <lightning-combobox
+      name="Region"
+      label="Region"
+      value={selectedRegion}
+      placeholder="Select Region"
+      options={regionOptions}
+      onchange={handleChange}
+      data-field-name="Region__c"
+      class="slds-var-m-bottom_small regionCls"
+      field-level-help="For Jobs that apply to all Regions use the “Saatchi + Division” Region."
+      required></lightning-combobox>
+      </div>
+    </div>
+
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium" style="margin-top: 30px;">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+      <lightning-input type="checkbox" label="Commission"  onchange={handleChange}  name="Commission" data-field-name="Commission__c"> </lightning-input>
+      </div>
+      </div>
+    </div>
+   
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="CopywriterUserType"
+            label="Copywriter"
+            value={selectedUserTypePickList5}
+            placeholder="Select User Type"
+            options={UserTypePickList5}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="Copywriter"
+            label=""
+            value={selectedCopywriterUser}
+            placeholder="Select Copywriter"
+            options={UsersPickList5}
+            onchange={handleChange}
+            data-field-name="Copywriter__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>                    
+</div>
+<!--Line 5 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+      <template if:true={StatusValues.data}>
+        <lightning-combobox
+        name="Status"
+        label="Status"
+        value={selectedStatus}
+        placeholder="Select Status"
+        options={StatusValues.data.values}
+        data-field-name="Status__c"
+        class="slds-var-m-bottom_small" ></lightning-combobox>
+      </template>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+            <lightning-input label="PO #" data-field-name="PO__c"></lightning-input>
+      </div>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="ProductionUserType"
+            label="Production"
+            value={selectedUserTypePickList6}
+            placeholder="Select User Type"
+            options={UserTypePickList6}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="Production"
+            label=""
+            value={selectedProduction}
+            placeholder="Select Production"
+            options={UsersPickList6}
+            onchange={handleChange}
+            data-field-name="Production__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>
+</div>               
+<!--Line 6 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium" style="margin-top: 30px;">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+      <lightning-input type="checkbox" label="Brief Required"  onchange={handleChange}  name="BriefRequired" data-field-name="Brief_Required__c"> </lightning-input>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-align_absolute-center">
+      <div class="slds-col slds-size_3-of-4">
+            <lightning-input label="Analytics Report" data-field-name="Analytics_Report__c"></lightning-input>
+      </div>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="CreativeDirectorUserType"
+            label="Creative Director"
+            value={selectedUserTypePickList7}
+            placeholder="Select User Type"
+            options={UserTypePickList7}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="CreativeDirector"
+            label=""
+            value={selectedCreativeDirector}
+            placeholder="Select Creative Director"
+            options={UsersPickList7}
+            onchange={handleChange}
+            data-field-name="Creative_Director__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>                    
+</div>
+<!--Line 7 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+      <template if:true={POATYPEValues.data}>
+        <lightning-combobox
+        name="POATYPE"
+        label="POA Type(If not applicable,use N/A)"
+        value={selectedPOATYPE}
+        placeholder="Select POA TYPE"
+        options={POATYPEValues.data.values}
+        data-field-name="POA_Type__c"
+        class="slds-var-m-bottom_small poaCls"
+        required></lightning-combobox>
+      </template>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:47%;padding-left:3pc;">
+            <lightning-combobox
+            name="MediaLeadUserType"
+            label="Media Lead"
+            value={selectedUserTypePickList10}
+            placeholder="Select User Type"
+            options={UserTypePickList10}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:47%;padding-right: 1pc;">
+            <lightning-combobox
+            name="MediaLead"
+            label=""
+            value={selectedMediaLead}
+            placeholder="Select Media Lead"
+            options={UsersPickList10}
+            onchange={handleChange}
+            data-field-name="Media_Lead__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="Co-CreativeDirectorUserType"
+            label="Co-Creative Director"
+            value={selectedUserTypePickList8}
+            placeholder="Select User Type"
+            options={UserTypePickList8}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="CoCreativeDirector"
+            label=""
+            value={selectedCoCreativeDirector}
+            placeholder="Select Co-Creative Director"
+            options={UsersPickList8}
+            onchange={handleChange}
+            data-field-name="Co_Creative_Director__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>                    
+</div>
+<!--Line 8 End-->
+<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+      <div class="slds-col slds-size_3-of-4" style="width:90%;float:left;padding-left: 3pc;">
+      <template if:true={CreativeCoordinatorValues.data}>
+        <lightning-combobox
+        name="CreativeCoordinator"
+        label="Creative Coordinator	"
+        value={selectedCreativeCoordinator}
+        placeholder="Select Creative Coordinator"
+        options={CreativeCoordinatorValues.data.values}
+        onchange={handleChange}
+        data-field-name="Creative_Coordinator__c"
+        class="slds-var-m-bottom_small" ></lightning-combobox>
+      </template>
+      </div>
+    </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:47%;padding-left:3pc;">
+            <lightning-combobox
+            name="iMediaLeadUserType"
+            label="iMedia Lead"
+            value={selectedUserTypePickList11}
+            placeholder="Select User Type"
+            options={UserTypePickList11}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:47%;padding-right: 1pc;">
+            <lightning-combobox
+            name="iMediaLead"
+            label=""
+            value={selectediMediaLead}
+            placeholder="Select iMedia Lead"
+            options={UsersPickList11}
+            onchange={handleChange}
+            data-field-name="iMediaLead__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div>
+       </div>
+    <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-4" style="width:50%;padding-left:2pc;">
+            <lightning-combobox
+            name="iMediaCoordinatorUserType"
+            label="iMedia Coordinator"
+            value={selectedUserTypePickList9}
+            placeholder="Select User Type"
+            options={UserTypePickList9}
+            onchange={handleChange}
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+          <div class="slds-col slds-size_2-of-4" style="padding-top:5px;width:50%;padding-right: 2pc;">
+            <lightning-combobox
+            name="iMediaCoordinator"
+            label=""
+            value={selectediMediaCoordinator}
+            placeholder="Select iMedia Coordinator"
+            options={UsersPickList9}
+            onchange={handleChange}
+            data-field-name="iMedia_Coordinator__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+          </div>
+        </div> 
+       </div>                    
+</div>
+        <!--Line 9 End-->
+<!--Third Layout-->
+<h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+  <div style="float:left;padding-left: 1pc;padding-right: 1pc;"></div>
+  <span class="slds-align_absolute-left" title="Section Title"><b>Job Description</b></span>
+  </h3>
+        <div class="slds-var-p-around_medium">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-size_3-of-3" style="width:97%;float:left;padding-left: 3pc;">
+                        <lightning-input-rich-text 
+                            label="Job Description"  
+                            type="text" 
+                            onchange={handleChange} 
+                            data-field-name="richjobdescription__c"
+                            name="JobDescription">
+                        </lightning-input-rich-text>
+                  </div>
+            </div>
+        </div>
+<!--Fourth Layout-->
+<h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+  <div style="float:left;padding-left: 1pc;padding-right: 1pc;"></div>
+  <span class="slds-align_absolute-left" title="Section Title"><b>General Information</b></span>
+  </h3>
+        <div class="slds-var-p-around_medium">
+            <div class="slds-grid slds-wrap">
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+                <lightning-textarea name="Destination__c" data-field-name="Destination__c" label="How will people experience this ad?" field-level-help="Please assume the creative team has no idea what this request is all about. Under what conditions people will see this ad for real? What will they be doing? Where will they see the ad? The more detail provided here, the better solution we can create." ></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+                <lightning-textarea name="Mandatories__c" data-field-name="Mandatories__c" label="Client Mandatories" field-level-help="Things the client absolutely requires us to have in the ad. Please think carefully about whether it’s really a “mandatory” or simply a “keep in mind.”"></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+                <lightning-input label="Who are we talking to?" data-field-name="Target_Audience__c" field-level-help="Specifically, what kind of people are we trying to reach with this ad? “All car buyers” is a bad answer. “20-30 year old women shopping for their first car online” is better. The more we know our audience, the better we can communicate with them."></lightning-input>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+                <lightning-input label="Context" data-field-name="Context__c"></lightning-input>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+                <lightning-textarea name="Issue__c" data-field-name="Issue__c" label="How will we define success with this ad?" field-level-help="It’s hard to reach a goal if you don’t know where you’re going. So, what criteria will we judge this ad’s success on? (Getting noticed? Clicks? ROI? Satisfying a client request? Driving traffic? Generating leads?)"></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+                <lightning-textarea name="Keep_in_mind__c" data-field-name="Keep_in_mind__c" label="Keep in Mind" field-level-help="Things that the creatives might want to keep in mind as they develop the ads. (ie. “consumer research indicates people like to see vehicle interiors.”)"></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+                <lightning-textarea name="Challenges__c" data-field-name="Challenges__c" label="What should they DO after seeing the ad?" field-level-help="We often get caught up in all the stuff we want to SAY in an ad. But it’s more important to think about what we want people to DO after experiencing our advertising."></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+                <lightning-textarea name="Featured_Products__c" data-field-name="Featured_Products__c" label="Featured Products" field-level-help="As specifically as possible, please. If no vehicles are specified, the creative team will make a recommendation."></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+                <lightning-textarea name="Business_Objective__c" data-field-name="Business_Objective__c" label="Main Message" field-level-help="What’s the main thing we can communicate in order to get people to DO the above? Ideally, this is a single message. Throw one ball and I can catch it. Throw five and I won’t catch any."></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+                <lightning-textarea name="Other__c" data-field-name="Other__c" label="Other" field-level-help="Anything else the creative team should know, but we forgot to ask."></lightning-textarea>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium">
+                <div class="slds-m-around_x-small" style="width:97%;padding-left: 2pc;">
+                    <span id="rich-text-editor-unique-id-03" class="slds-form-element__label strong-text">Historical Examples</span>
+                    <lightning-input-rich-text 
+                        label="Historical Examples" 
+                        type="text" 
+                        onchange={handleChange} 
+                        name="HistoricalExamples"
+                        data-field-name="Insights__c">
+                    </lightning-input-rich-text>
+                  </div>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium">
+                <div class="slds-m-around_x-small" style="width:97%;padding-left: 1pc;">
+                    <span id="rich-text-editor-unique-id-04" class="slds-form-element__label strong-text">Reference Image</span>
+                    <lightning-input-rich-text 
+                        label="Reference Image" 
+                        type="text" 
+                        onchange={handleChange} 
+                        name="Reference Image"
+                        data-field-name="Reference_Image__c">
+                    </lightning-input-rich-text>
+                  </div>
+              </div>
+              <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium">
+                <div class="slds-m-around_x-small" style="width:97%;padding-left: 2pc;">
+                    <span id="rich-text-editor-unique-id-02" class="slds-form-element__label strong-text">Legal Disclaimer</span>
+                    <lightning-input-rich-text 
+                        label="Legal Disclaimer" 
+                        type="text" 
+                        onchange={handleChange} 
+                        field-level-help="Things the lawyers absolutely require us to have in the ad."
+                        name="Legal Disclaimer"
+                        data-field-name="Job_Disclaimers__c">
+                    </lightning-input-rich-text>
+                  </div>
+              </div>
+            </div>
+        </div>
+<!--Fifth Layout-->
+<h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+  <div style="float:left;padding-left: 1pc;padding-right: 1pc;"></div>
+  <span class="slds-align_absolute-left" title="Section Title"><b>Key Dates</b></span>
+  </h3>
+  <div class="slds-var-p-around_medium">
+    <div class="slds-grid slds-wrap">
+      <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-col slds-size_3-of-4" style="width:99%;float:left;padding-left: 3pc;padding-right: 1pc;">
+        <lightning-input label="Request" type="date" data-field-name="Project_Request_Date__c"></lightning-input>
+        </div>
+      </div>
+      <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-align_absolute-center">
+        <div class="slds-col slds-size_3-of-4">
+        <lightning-input label="1st Creative Review" type="date" data-field-name="Review_Date__c"></lightning-input>
+        </div>
+        </div>
+      </div>
+      <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-col slds-size_3-of-4" style="width:99%;float:right;padding-right: 2pc;padding-left: 1pc;">
+        <lightning-input label="Field Review" type="date" data-field-name="Comp_Review_Date__c"></lightning-input>
+        </div>
+        <div style="float:right;padding-right: 3pc;"></div>
+      </div>
+      <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-col slds-size_3-of-4" style="width:99%;float:left;padding-left: 3pc;padding-right: 1pc;">
+        <lightning-input label="Traffic" type="date" data-field-name="Ship_Date__c"></lightning-input>
+        </div>
+      </div>
+      <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-align_absolute-center">
+        <div class="slds-col slds-size_3-of-4">
+        <lightning-input label="Production" type="date" data-field-name="Production_Date__c"></lightning-input>
+        </div>
+        </div>
+      </div>
+      <div class="slds-col slds-size_4-of-12 slds-var-p-horizontal_medium">
+        <div class="slds-col slds-size_3-of-4" style="width:99%;float:right;padding-right: 2pc;padding-left: 1pc;">
+        <lightning-input label="Live" type="date" class="liveCls" data-field-name="Livedate__c" required="true"></lightning-input>
+        </div>
+      </div>
+    </div>
+</div>
+        
+<!--Sixth Layout-->
+<h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+  <div style="float:left;padding-left: 1pc;padding-right: 1pc;"></div>
+  <span class="slds-align_absolute-left" title="Section Title"><b>TV Details</b></span>
+  </h3>
+
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-6 slds-var-p-horizontal_medium slds-align_absolute-center" style="margin-top: 30px;">
+                        <div class="slds-checkbox">
+                          <lightning-input type="checkbox" label="Incentive TV"  onchange={handleChange}  name="IncentiveTV" data-field-name="Incentive_TV__c"> </lightning-input>
+                        </div>
+                        </div>
+            <div class="slds-col slds-size_2-of-6 slds-var-p-horizontal_medium slds-align_absolute-center" style="margin-top: 30px;">
+                        <div class="slds-checkbox">
+                          <lightning-input type="checkbox" label="TV Shoot Production"  onchange={handleChange}  name="TVShootProduction" data-field-name="TV_Shoot_Production__c"> </lightning-input>
+                        </div>
+            </div>
+            <div class="slds-col slds-size_2-of-6 slds-var-p-horizontal_medium slds-align_absolute-center" style="margin-top: 30px;">
+                        <div class="slds-checkbox">
+                          <lightning-input type="checkbox" label="TV Shoot Concept"  onchange={handleChange}  name="TVShootConcept" data-field-name="TV_Shoot_Concept__c"> </lightning-input>
+                        </div>
+            </div>
+        </div><br><div class="slds-border_bottom"></div>
+
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-col slds-size_2-of-6 slds-var-p-horizontal_medium slds-align_absolute-center" style="margin-top: 30px;">
+                        <div class="slds-checkbox">
+                          <lightning-input type="checkbox" label="Tactical TV"  onchange={handleChange}  name="TacticalTV" data-field-name="Tactical_TV__c"> </lightning-input>
+                        </div>
+            </div>
+            <div class="slds-col slds-size_2-of-6 slds-var-p-horizontal_medium slds-align_absolute-center" style="margin-top: 30px;">
+                        <div class="slds-checkbox">
+                          <lightning-input type="checkbox" label="Tagging"  onchange={handleChange}  name="Tagging" data-field-name="Tagging__c"> </lightning-input>
+                        </div>
+            </div>
+        </div><br>
+        <div class="slds-border_bottom"></div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+              <lightning-textarea name="Specs__c" data-field-name="Specs__c" label="Specs" field-level-help="What are the dimensions, file size needs, formats, etc. of this ad? This is really important. The creative team can’t do much without the specs."></lightning-textarea>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+              <lightning-input name="Number_Of_Executions__c" type="number" placeholder="Please Enter Numbers.." data-field-name="Number_Of_Executions__c" label="Number Of Executions" ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+              <lightning-textarea name="DestinationST__c" data-field-name="DestinationST__c" label="Destination"></lightning-textarea>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:right;padding-right: 2pc;padding-left: 2pc;">
+              <lightning-textarea name="Tag_Information__c" data-field-name="Tag_Information__c" label="Tag Information" ></lightning-textarea>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;float:left;padding-left: 3pc;padding-right: 2pc;">
+              <div class="slds-form-element slds-var-p-bottom_small slds-form_horizontal">    
+                    <lightning-dual-listbox name="LengthofSpots"
+                                            label="Length of Spots"
+                                            source-label="Available"
+                                            selected-label="Choosen"
+                                            options={lstOptions}
+                                            onchange={handleChange}
+                                            data-field-name="Length_of_Spots__c"
+                                            ></lightning-dual-listbox>
+              </div>
+            </div>
+
+      </div>
+      <div slot="footer" class="slds-align_absolute-center">
+        <lightning-button variant="brand" label="Save" title="Save" onclick={saveNewTVJob} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="Neutral" label="Cancel" title="Cancel" onclick={cancel} class="slds-m-left_x-small"></lightning-button>
+        </div>
+      </lightning-quick-action-panel>
+</template>

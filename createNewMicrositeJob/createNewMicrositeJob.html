@@ -1,0 +1,282 @@
+<template>
+    <c-wizard header="New Job Wizard" variant="path" current-step="step-1" oncomplete={saveNewMicrositeJob}>
+        <!--Page 1-->
+        <c-wizard-step label="Title" name="step-1" before-change={validate}>
+          <div class="slds-var-p-around_medium">
+            <div class="slds-grid slds-wrap">
+              <div class="slds-col slds-size_12-of-12 slds-var-p-horizontal_medium" style="padding-left:8pc;padding-right:7pc;">
+            <div class="slds-form-element slds-var-p-bottom_small slds-form_horizontal">
+              <lightning-input label="Job Title" data-field-name="Name" required></lightning-input>
+            </div>
+          </div>
+        
+           <div class="slds-col slds-size_12-of-12 slds-var-p-horizontal_medium" style="padding-left:8pc;padding-right:7pc;">
+            <div class="slds-form-element slds-var-p-bottom_small  slds-form_horizontal">
+            <lightning-input label="Live Date" type="date" data-field-name="Livedate__c" required></lightning-input>
+          </div>
+          </div>
+          </div>
+          </div>
+        </c-wizard-step>
+        <!--Page 2-->
+        <c-wizard-step label="Internal Information" name="step-2" before-change={validate}>
+          <div class="slds-var-p-around_medium">
+          <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;padding-left:5pc;">
+            <lightning-combobox
+            name="Region"
+            label="Region"
+            value={selectedRegion}
+            placeholder="Select Region"
+            options={regionOptions}
+            onchange={handleChange}
+            data-field-name="Region__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>  
+            </div>
+          <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium">
+            <div class="slds-grid slds-wrap">
+              <div class="slds-col slds-size_2-of-6">
+                <lightning-combobox
+                name="FieldRepUserType"
+                label="Field Rep"
+                value={selectedUserTypePickList1}
+                placeholder="Select User Type"
+                options={UserTypePickList1}
+                onchange={handleChange}
+                class="slds-var-m-bottom_small" ></lightning-combobox>  
+              </div>
+              <div class="slds-col slds-size_3-of-6" style="padding-top:5px;">
+                <lightning-combobox
+                name="Field Rep"
+                label=""
+                value={selectedFieldRep}
+                placeholder="Select Field Rep"
+                options={UsersPickList1}
+                onchange={handleChange}
+                data-field-name="Field_R__c"
+                class="slds-var-m-bottom_small" ></lightning-combobox>  
+              </div>
+            </div>
+           <!-- onchange={handleChange}-->
+           </div>
+
+
+           <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;padding-left:5pc;">
+            <lightning-combobox
+            name="TDA"
+            label="TDA"
+            value={selectedTDA}
+            placeholder="Select TDA"
+            options={TDAOptions}
+            onchange={handleChange}
+            data-field-name="TDA__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>
+          </div>
+          <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium">
+            <div class="slds-grid slds-wrap">
+              <div class="slds-col slds-size_2-of-6">
+                 <lightning-combobox
+                  name="OppsRepUserType"
+                  label="Opps Rep"
+                  value={selectedUserTypePickList2}
+                  placeholder="Select User Type"
+                  options={UserTypePickList2}
+                  onchange={handleChange}
+                  class="slds-var-m-bottom_small"></lightning-combobox>  
+              </div>
+              <div class="slds-col slds-size_3-of-6"  style="padding-top:5px;">
+                    
+                <lightning-combobox
+                name="Opps Rep"
+                label=""
+                value={selectedOpps}
+                placeholder="Select Opps Rep"
+                options={UsersPickList2}
+                data-field-name="Opps_R__c"
+                onchange={handleChange}
+                class="slds-var-m-bottom_small" ></lightning-combobox>  
+              </div>
+            </div>
+           </div>
+
+
+           <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium" style="width:50%;padding-left:5pc;">
+            <lightning-combobox
+            name="Market"
+            label="Market"
+            value={selectedMarket}
+            placeholder="Select Market"
+            options={marketOptions}
+            onchange={handleChange}
+            data-field-name="Market__c"
+            class="slds-var-m-bottom_small" ></lightning-combobox>
+          </div>
+
+          <div class="slds-col slds-size_6-of-12 slds-var-p-horizontal_medium">
+            <div class="slds-grid slds-wrap">
+              <div class="slds-col slds-size_2-of-6">
+                 <lightning-combobox
+                  name="DigitalProducerUserType"
+                  label="Digital Producer"
+                  value={selectedUserTypePickList3}
+                  placeholder="Select User Type"
+                  options={UserTypePickList3}
+                  onchange={handleChange}
+                  class="slds-var-m-bottom_small"></lightning-combobox>  
+              </div>
+              <div class="slds-col slds-size_3-of-6"  style="padding-top:5px;">
+                <lightning-combobox
+                name="Digital Producer"
+                label=""
+                value={selectedProducer}
+                placeholder="Select Producer"
+                options={UsersPickList3}
+                data-field-name="Digital_Producer__c"
+                onchange={handleChange}
+                class="slds-var-m-bottom_small" ></lightning-combobox>  
+              </div>
+            </div>
+             </div>
+
+
+        </div>
+      </div>
+        </c-wizard-step>
+<!--Page 3-->
+        <c-wizard-step label="General Information" name="step-3" before-change={validate}>
+          <div class="slds-var-p-around_medium">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-size_3-of-3">
+                    <div class="slds-box slds-box_x-small slds-m-around_x-small slds-text-align_center">
+                        <span id="rich-text-editor-unique-id-01" class="slds-form-element__label strong-text">Job Description</span>
+                        <lightning-input-rich-text 
+                            label="Job Description"  
+                            type="text" 
+                            onchange={handleChange} 
+                            data-field-name="richjobdescription__c"
+                            name="JobDescription">
+                        </lightning-input-rich-text>
+            
+                    </div>
+                  </div>
+                  
+               <div class="slds-size_3-of-6">
+                  <div class="slds-box slds-box_x-small slds-m-around_x-small slds-text-align_center">
+                    <span id="rich-text-editor-unique-id-02" class="slds-form-element__label strong-text">Historic Example</span>
+                    <lightning-input-rich-text 
+                        label="Historical Example" 
+                        type="text" 
+                        onchange={handleChange} 
+                        data-field-name="Insights__c"
+                        name="HistoricExample">
+                    </lightning-input-rich-text>
+                    
+                  </div>
+                </div>
+                <div class="slds-size_3-of-6">
+                  <div class="slds-box slds-box_x-small slds-m-around_x-small slds-text-align_center">
+                    <span id="rich-text-editor-unique-id-03" class="slds-form-element__label strong-text">Reference Image</span>
+                    <lightning-input-rich-text 
+                        label="Reference Image"  
+                        type="text" 
+                        onchange={handleChange} 
+                        data-field-name="Reference_Image__c"
+                        name="ReferenceImage">
+                    </lightning-input-rich-text>
+                    
+                  </div>
+                </div>
+                <div class="slds-size_6-of-6" style="padding-left:18pc;padding-right:18pc;">
+                  <div class="slds-box slds-box_x-small slds-m-around_x-small slds-text-align_center">
+                      <span id="rich-text-editor-unique-id-04" class="slds-form-element__label strong-text">Featured Products</span>
+                      <lightning-textarea
+                      name="FeaturedProducts" 
+                      data-field-name="Featured_Products__c"
+                      placeholder="Enter Text.."
+                      style="height:90px;">
+                    </lightning-textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </c-wizard-step>
+
+<!--Page 4-->
+          <c-wizard-step label="Job Details" name="step-4" before-change={validate}>
+            <h3 class="slds-section__title slds-theme_shade slds-box slds-box_xx-small">
+              <span class="slds-align_absolute-left" title="Section Title"><b>Site Details</b></span>
+              </h3>
+              <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="slds-form-element slds-var-p-bottom_small slds-form_horizontal">
+                        <lightning-input label="Campaign Live" type="date" data-field-name="Campaign_Live_Date__c"></lightning-input>
+                      </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4 slds-align_absolute-center" style="padding-bottom:25px;">
+                  <lightning-input type="checkbox" label="Accompanying Media"  onchange={handleChange}  name="AccompanyingMedia" data-field-name="Accompanying_Media_Campa__c"> </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-4 slds-align_absolute-center" style="padding-bottom:25px;">
+                  <lightning-input type="checkbox" label="Custom URL"  onchange={handleChange}  name="CustomURL" data-field-name="Custom_URL_Needed__c"> </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-4 slds-align_absolute-center" style="padding-bottom:25px;">
+                  <lightning-input type="checkbox" label="URL Purchase"  onchange={handleChange}  name="URLPurchase" data-field-name="URL_Purchase_Needed__c"> </lightning-input>
+                </div>
+            </div>
+            
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-form-element slds-var-p-bottom_small slds-form_horizontal" style="width:70%;padding-left:1pc">
+                        <lightning-input label="Other Host" type="text" data-field-name="If_Other__c"></lightning-input>
+                      </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                  <div class="slds-col slds-size_3-of-3 slds-var-p-horizontal_medium" style="width:90%;padding-right:3pc;padding-right:1pc;">
+                    <div class="slds-form-element slds-var-p-bottom_small  slds-form_horizontal">
+                      <template if:true={HostValues.data}>
+                            <lightning-combobox
+                            name="Host"
+                            label="Host"
+                            value={selectedHost}
+                            placeholder="-- None --"
+                            options={HostValues.data.values}
+                            data-field-name="Host__c"
+                            onchange={handleHost}></lightning-combobox>
+                      </template>
+                  </div>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                  <div class="slds-col slds-size_3-of-3 slds-var-p-horizontal_medium" style="width:90%">
+                    <div class="slds-form-element slds-var-p-bottom_small  slds-form_horizontal">
+                      <template if:true={TemplateValues.data}>
+                            <lightning-combobox
+                            name="Template"
+                            label="Template"
+                            value={selectedTemplate}
+                            placeholder="-- None --"
+                            options={TemplateValues.data.values}
+                            data-field-name="Buytoyota_Template__c"
+                            onchange={handleTemplate}></lightning-combobox>
+                      </template>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            <div class="slds-border_bottom"></div>
+                <div class="slds-col slds-size_3-of-3">
+                  <div class="slds-form-element slds-var-p-bottom_small slds-form_horizontal slds-align_absolute-center" style="padding-left:3pc;padding-right:13pc">
+                  <div class="slds-col slds-size_1-of-3 slds-var-p-horizontal_medium">
+                    <span id="rich-text-editor-unique-id-05" class="slds-form-element__label slds-align_absolute-center slds-text-align_center" style="padding-left:10pc;">Tags</span>
+                    <lightning-dual-listbox 
+                                            source-label="Available"
+                                            selected-label="Choosen"
+                                            options={lstOptions}
+                                            data-field-name="Tags_Needed__c"
+                                            onchange={handleChange}
+                                            ></lightning-dual-listbox>
+                </div>
+              </div>
+                </div>
+        </c-wizard-step>
+    </c-wizard>
+</template>

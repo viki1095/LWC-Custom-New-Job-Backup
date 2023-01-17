@@ -1,0 +1,30 @@
+.slds-col
+{
+    
+}
+.THIS div.slds-radio_button-group{
+    border: none;
+}
+
+.THIS label.slds-radio_button__label {
+    border-radius: 0.25rem !important;
+}
+.my-radio-group {
+    --sds-c-button-line-height: 5rem;
+    --sds-c-radio-mark-color-foreground: #5182de;
+    --sds-c-radio-color-background-checked: white;
+    background:#f4f5f6;
+    font-size: 2em;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+/*
+.lightning-radio-group
+{
+    width: 500px;
+    border: aqua;
+    border: 2px solid red;
+    background: antiquewhite;
+    padding-bottom: 15px;
+}*/

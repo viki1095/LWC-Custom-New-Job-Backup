@@ -1,0 +1,142 @@
+<template>
+    <!--
+    <template if:true={initSection}>
+        <lightning-quick-action-panel header="Job Creation : Step - 1" class="panel-body_custom myheader">
+            <div class="slds-is-relative">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="5"></lightning-layout-item>
+                    <lightning-layout-item size="2">
+                        <button class="slds-button slds-button_neutral" onclick={handleClick}>
+                            Select Job
+                        </button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <div slot="footer">     
+            </div>
+        </lightning-quick-action-panel>
+     </template>
+    -->
+     <template if:true={displayDetails}>
+        <lightning-quick-action-panel header="Select Your Job Type" class="panel-body_custom">
+            <!-- body -->
+            <div class="slds-is-relative">
+                <!-- spinner -->
+                <!--<template if:true={bypassExecuting}>
+                    <lightning-spinner variant="brand" size="medium"> 
+                    </lightning-spinner>    
+                </template>-->
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="5"></lightning-layout-item>
+                    <lightning-layout-item size="2">
+                        <lightning-radio-group name="radioGroup"
+                        label=""
+                        options={options}
+                        value={value}
+                        type="radio"
+                        class="my-radio-group"
+                        onchange={handleRadioChangeJobType}
+                        ></lightning-radio-group>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div> <!-- body within slds-is-relative along with spinner -->
+            <!-- footer -->
+            <div slot="footer" class="slds-m-bottom_medium" style="height:1em">     
+                
+                <lightning-button variant="brand" label="Next" onclick={Step1Submit} size="small" disabled={continueDisabled} class="slds-float_right"></lightning-button>
+            </div>
+        </lightning-quick-action-panel>
+     </template>
+
+    <template if:true={displayDetails2}>
+        <lightning-quick-action-panel header="Select Interactive Job Type" class="panel-body_custom myheader">
+            <!-- body -->
+            <div class="slds-is-relative">
+                <!-- spinner -->
+                <!--<template if:true={bypassExecuting}>
+                    <lightning-spinner variant="brand" size="medium"> 
+                    </lightning-spinner>    
+                </template>-->
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="5"></lightning-layout-item>
+                    <lightning-layout-item size="2">
+                        <lightning-radio-group name="radioGroupInteractive"
+                        label=""
+                        options={optionsInteractive}
+                        value={value}
+                        type="radio"
+                        class="my-radio-group"
+                        onchange={handleRadioChangeInteractive}
+                        ></lightning-radio-group>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div> <!-- body within slds-is-relative along with spinner -->
+            <!-- footer -->
+            <div slot="footer">
+               <lightning-button class="slds-float_left" variant="neutral" label="Previous" onclick={backStep2Action}></lightning-button>
+            <lightning-button variant="brand" label="Next" onclick={Step2Submit} disabled={continueDisabled} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-quick-action-panel>     
+     </template>
+
+
+  <!--<template if:true={displayDetails3}>
+    <lightning-quick-action-panel header="Job Creation : Step - 4" class="panel-body_custom myheader">
+        
+        
+        <div class="slds-is-relative">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="5"></lightning-layout-item>
+                <lightning-layout-item size="2">
+                    <lightning-input label="Other Type:" type="text" data-field-name="Type_Other__c" required></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        
+        <div slot="footer">
+            <lightning-button class="slds-float_left" variant="neutral" label="Back" onclick={backStep3Action}></lightning-button>
+            <lightning-button variant="brand" label="Next" onclick={Step3Submit} disabled={continueDisabled} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </lightning-quick-action-panel>  
+
+  </template>
+-->
+
+    <template if:true={showNewOtherJobComponent}>
+        <c-create-new-other-job  if:true={showNewOtherJobComponent}></c-create-new-other-job>
+    </template>  
+
+  
+    <template if:true={showNewPrintJobComponent}>
+      <c-create-new-print-job  if:true={showNewPrintJobComponent}></c-create-new-print-job>
+    </template>
+
+    <template if:true={showNewTVJobComponent}>
+        <c-create-new-t-v-job  if:true={showNewTVJobComponent}></c-create-new-t-v-job>
+    </template>
+
+    <template if:true={showNewRadioComponent}>
+        <c-create-new-radio-job  if:true={showNewRadioComponent}></c-create-new-radio-job>
+    </template>
+
+    <template if:true={showNewBillingComponent}>
+        <c-create-new-billing-job  if:true={showNewBillingComponent}></c-create-new-billing-job>
+    </template>
+
+    <!--New Interactive Job options-->
+    <template if:true={showNewBannerJobComponent}>
+        <c-create-new-banner-job  if:true={showNewBannerJobComponent}></c-create-new-banner-job>
+    </template>
+
+    <template if:true={showNewEmailJobComponent}>
+        <c-create-new-email-job  if:true={showNewEmailJobComponent}></c-create-new-email-job>
+    </template>
+
+    <template if:true={showNewKeywordJobComponent}>
+        <c-create-new-keyword-job  if:true={showNewKeywordJobComponent}></c-create-new-keyword-job>
+    </template>
+
+    <template if:true={showNewMicrositeJobComponent}>
+        <c-create-new-microsite-job  if:true={showNewMicrositeJobComponent}></c-create-new-microsite-job>
+    </template>
+</template>
