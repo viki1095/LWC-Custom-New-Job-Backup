@@ -1,0 +1,37 @@
+<template>
+    <lightning-quick-action-panel header="Campaign Clone">
+        <lightning-record-edit-form record-id={recordId} object-api-name="CampaignEventPlanning__c" onsuccess={handleSuccess} onsubmit={handleSubmit}>
+          <div class="slds-grid" style="padding-left: 2pc;">
+            <lightning-messages></lightning-messages>
+            <div class="slds-border_bottom" style="float:left; width: 33%;">
+              <lightning-input-field field-name="Name" required></lightning-input-field>
+              <lightning-input-field field-name="Type__c" required></lightning-input-field>
+            </div>
+            <div class="slds-border_bottom" style="float:left; width: 67%;padding-left: 2pc;padding-right: 2pc;">
+                <lightning-input-field field-name="Lead_TDA__c"></lightning-input-field>
+                <lightning-input-field field-name="Involved_TDA__c"></lightning-input-field>
+            </div><div class="slds-border_bottom"></div>
+          </div>
+          <div class="slds-grid" style="padding-left: 2pc;">
+            <div style="float:left;width: 50%;">
+            <lightning-input-field field-name="Description__c"></lightning-input-field>
+            </div>
+            <div style="float:left;width: 50%;;padding-left: 2pc;padding-right: 2pc;">
+                <lightning-input-field field-name="Live_Date__c"></lightning-input-field>
+                </div> 
+            </div>
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                  <span class="slds-align_absolute-center" title="Section Title">
+                    <b>Related Jobs</b>
+                  </span>
+                </h3>
+              </div>
+
+              <div class="slds-align_absolute-center">
+                <lightning-button variant="brand" label="Save" type="submit" title="Save" onclick={saveCloneJob} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button variant="Neutral" label="Cancel" title="Cancel" onclick={cancel} class="slds-m-left_x-small"></lightning-button>
+              </div>
+        </lightning-record-edit-form>
+    </lightning-quick-action-panel>
+</template>
