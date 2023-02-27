@@ -1,0 +1,7 @@
+public with sharing class createCampaignEventPlanningController {
+    @AuraEnabled
+    public static Id saveCampaign(CampaignEventPlanning__c newCampaign) {
+        insert newCampaign;
+        return newCampaign.Id;
+    }
+}
