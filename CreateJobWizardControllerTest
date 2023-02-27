@@ -1,0 +1,21 @@
+@isTest
+public class CreateJobWizardControllerTest {
+    static testmethod void testCreateJob(){
+        Test.StartTest(); 
+        CreateJobWizardController.fetchCampaign();
+        CreateJobWizardController.fetchMarkets();
+        CreateJobWizardController.fetchMasterJob();
+        CreateJobWizardController.fetchRegion();
+        CreateJobWizardController.fetchTDA();
+        CreateJobWizardController.fetchUsers();
+        Job__c newJob = new Job__c(name = 'TestJob');
+        CreateJobWizardController.saveJob(newJob);
+        String typeOfUser = 'User';
+        CreateJobWizardController.getUserList(typeOfUser);
+        typeOfUser = 'Partner User';
+        CreateJobWizardController.getUserList(typeOfUser);
+        typeOfUser = 'Customer Portal User';
+        CreateJobWizardController.getUserList(typeOfUser);
+        Test.StopTest();
+    }
+}
