@@ -1,0 +1,33 @@
+//createCampaignEventPlanningctrlTest
+@isTest
+public class createCampaignEventPlanningctrlTest {
+    @testSetup
+    static void setup() {
+        // Test data setup
+    }
+
+    @isTest
+    static void testSaveCampaign() {
+        CampaignEventPlanning__c campaign = new CampaignEventPlanning__c(
+            Name = 'Test Campaign',
+            Type__c = 'Event',
+            Lead_TDA__c = 'CHI',
+            Involved_TDA__c = 'CHI',
+            Description__c = 'Test description',
+            Live_Date__c = Date.today()
+        );
+        
+        Test.startTest();
+        Id campaignId = createCampaignEventPlanningController.saveCampaign(campaign);
+        Test.stopTest();
+
+        // Verify campaign was created
+        CampaignEventPlanning__c savedCampaign = [SELECT Id, Name, Type__c, Lead_TDA__c, Involved_TDA__c, Description__c, Live_Date__c FROM CampaignEventPlanning__c WHERE Id = :campaignId];
+        System.assertEquals('Test Campaign', savedCampaign.Name);
+        System.assertEquals('Event', savedCampaign.Type__c);
+        System.assertEquals('CHI', savedCampaign.Lead_TDA__c);
+        System.assertEquals('CHI', savedCampaign.Involved_TDA__c);
+        System.assertEquals('Test description', savedCampaign.Description__c);
+        System.assertEquals(Date.today(), savedCampaign.Live_Date__c);
+    }
+}
