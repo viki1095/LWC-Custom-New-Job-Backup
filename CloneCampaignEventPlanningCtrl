@@ -1,0 +1,99 @@
+public with sharing class CloneCampaignEventPlanningCtrl {
+    @AuraEnabled(cacheable=true)
+    public static sobjectWrapper fetchSobject(Id RecordId)
+    {
+        sobjectWrapper osobjectWrapper = new sobjectWrapper();
+        osobjectWrapper.lstJob = [SELECT Name, Type__c From Job__c 
+                                      WHERE Creativeconcept__c =: RecordId];
+        return osobjectWrapper;
+    }
+    
+    public class sobjectWrapper {
+        @AuraEnabled public List<Job__c> lstJob{get;set;}
+    }
+
+    @AuraEnabled
+    public static Id cloneJob(CampaignEventPlanning__c newJob, String oldRecord)
+    {
+        system.debug('newJob.. oldRecord'  + oldRecord);
+        system.debug('newJob..'  + newJob);
+        try 
+        {
+            CampaignEventPlanning__c newCampaignEventPlanning = new CampaignEventPlanning__c();
+            newCampaignEventPlanning.Name = newJob.Name;
+            newCampaignEventPlanning.Type__c  = newJob.Type__c;
+            newCampaignEventPlanning.Status__c = newJob.Status__c;
+            newCampaignEventPlanning.Master_Campaign__c  = newJob.Master_Campaign__c;
+            newCampaignEventPlanning.Budgetted_Cost__c = newJob.Budgetted_Cost__c;
+            newCampaignEventPlanning.Lead_TDA__c  = newJob.Lead_TDA__c;
+            newCampaignEventPlanning.Involved_TDA__c = newJob.Involved_TDA__c;
+            newCampaignEventPlanning.Market__c  = newJob.Market__c;
+         
+            newCampaignEventPlanning.Featured_Products__c  = newJob.Featured_Products__c;
+            newCampaignEventPlanning.Description__c = newJob.Description__c;
+            newCampaignEventPlanning.Historic_Examples__c = newJob.Historic_Examples__c;
+         
+            newCampaignEventPlanning.Request_Date__c = newJob.Request_Date__c;
+            newCampaignEventPlanning.Live_Date__c = newJob.Live_Date__c;
+            
+            newCampaignEventPlanning.End_Date__c = newJob.End_Date__c;
+            newCampaignEventPlanning.Analytics_Due__c = newJob.Analytics_Due__c;
+            
+            newCampaignEventPlanning.Digital_Associate_Creative_Director__c  = newJob.Digital_Associate_Creative_Director__c;
+            newCampaignEventPlanning.Executive_Creative_Director__c = newJob.Executive_Creative_Director__c;
+            newCampaignEventPlanning.Co_Creative_Director__c = newJob.Co_Creative_Director__c;
+            
+            newCampaignEventPlanning.Digital_Creative_Director__c  = newJob.Digital_Creative_Director__c;
+            newCampaignEventPlanning.digital_producer__c = newJob.digital_producer__c;
+            newCampaignEventPlanning.Creative_Director_s__c = newJob.Creative_Director_s__c;
+            
+            newCampaignEventPlanning.Opps_R__c  = newJob.Opps_R__c;
+            newCampaignEventPlanning.Field_Director__c = newJob.Field_Director__c;
+            newCampaignEventPlanning.Field_R__c = newJob.Field_R__c;
+            
+            newCampaignEventPlanning.iMedia_Lead__c  = newJob.iMedia_Lead__c;
+            newCampaignEventPlanning.Producer__c = newJob.Producer__c;
+            newCampaignEventPlanning.Media_Lead__c = newJob.Media_Lead__c;
+
+            insert newCampaignEventPlanning;
+            system.debug(' ..' + newCampaignEventPlanning.Id);
+           
+            List<Job__c> newJobList = new List<Job__c>();
+            List<Job__c> jobList = [SELECT Id, Name, Type__c,Livedate__c , Status__c,Region__c,Market__c,TDA__c,
+                                    Working_Directory__c,Mandatories__c,Featured_Products__c,Type_Other__c,
+                                    richjobdescription__c,Job_Disclaimers__c,Insights__c,Master_Job__c,
+                                    Creativeconcept__c,iMedia_Request__c,jobnumber__c,New_Print_Ad__c,
+                                    New_Outdoor__c,Print_Revise__c,New_LED_Signage__c,Color__c,
+                                    Newspaper__c,New_POS__c,Tag_Information__c,Dimensions__c,
+                                    Incentive_TV__c,Tactical_TV__c,TV_Shoot_Concept__c,TV_Shoot_Production__c,
+                                    Context__c,New_Radio_Ad__c,Incentive_Radio__c,Tagging__c,Number_Of_Executions__c,
+                                    Length_of_Spots__c,Specs__c,DestinationST__c,Custom_URL_Needed__c,
+                                    URL_Purchase_Needed__c,Accompanying_Media_Campa__c,Tags_Needed__c,Host__c,If_Other__c,
+                                    Email_Template__c,Campaign_Live_Date__c,Review_Links__c,Functional_Notes__c,
+                                    Project_Request_Date__c,Review_Date2__c,Production_Date__c,Ship_Date__c,
+                                    Review_Date__c,Comp_Review_Date__c,VG_Internal_Ship_Date__c,
+                                    Account__c,Internal_Operations__c,Executive_Creative_Director__c,
+                                    CreativeCoordinator__c,Art_Director__c,Digital_Creative_Director__c,
+                                    Associate_Creative_Director__c,Designer__c,Creative_Director__c,Copywriter__c,
+                                    Copy_Editor__c,Digital_Producer__c,Producer__c,Production__c,Media_Lead__c,
+                                    iMediaLead__c,iMedia_Coordinator__c,Budget__c,Billable_Date__c,Actual__c,
+                                    PO__c,Commission__c,POA_Type__c,Assign_to_VG__c,Invoice_Month__c,VG_Points__c,
+                                    VG_Billing__c,VG_Cost__c,Points_Estimate__c,VG_Job__c,Estimated_Cost__c,VG_Invoice__c 
+                                    From Job__c WHERE Creativeconcept__c =: oldRecord];
+            
+            for(Job__c jobRecord : jobList){
+                Job__c newJobRelatedRecords = jobRecord.clone(false, true);
+                newJobRelatedRecords.Creativeconcept__c  = newCampaignEventPlanning.Id;
+                newJobList.add(newJobRelatedRecords);
+            }
+            insert newJobList;
+            
+            return newCampaignEventPlanning.Id;
+        } 
+        catch (Exception error) 
+        {
+            throw new AuraHandledException(error.getMessage());
+        }
+    }
+
+}
