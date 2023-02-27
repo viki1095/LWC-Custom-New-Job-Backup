@@ -1,0 +1,298 @@
+<template>
+    <lightning-quick-action-panel header="Job Clone">
+      <lightning-record-edit-form record-id={recordId} object-api-name="Job__c" onsubmit={handleSubmit} onload={handleOnload}>
+        <div class="slds-grid" style="padding-left: 2pc;">
+          <lightning-messages></lightning-messages>
+          <div style="float:left; width: 33%;">
+            <lightning-input-field class = "name" onchange={handleJobNameChange} data-field-name="Name" field-name="Name" required></lightning-input-field>
+            <lightning-input-field data-field-name="Name" field-name="Status__c"></lightning-input-field>
+      <!--  <lightning-input-field field-name="Livedate__c"></lightning-input-field> -->
+            <lightning-input-field data-field-name="Master_Job__c" field-name="Master_Job__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Creativeconcept__c" field-name="Creativeconcept__c"></lightning-input-field>
+            <lightning-input-field data-field-name="iMedia_Request__c" field-name="iMedia_Request__c"></lightning-input-field>
+            <lightning-input-field data-field-name="jobnumber__c" field-name="jobnumber__c"></lightning-input-field>
+            <lightning-input-field class= "region" onchange={handleJobRegionChange} data-field-name="Region__c" field-name="Region__c" required></lightning-input-field>
+            <lightning-input-field class= "market" onchange={handleJobMarketChange} data-field-name="Market__c" field-name="Market__c" required></lightning-input-field>
+            <lightning-input-field data-field-name="TDA__c" field-name="TDA__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Working_Directory__c" field-name="Working_Directory__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Mandatories__c" field-name="Mandatories__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Featured_Products__c" field-name="Featured_Products__c"></lightning-input-field>
+          </div>
+          <div style="float:left; width: 67%;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field class = "type" onchange={handleJobTypeChange} data-field-name="Type__c" field-name="Type__c" required></lightning-input-field>
+            <lightning-input-field data-field-name="Type_Other__c" field-name="Type_Other__c"></lightning-input-field>
+            <lightning-input-field data-field-name="richjobdescription__c" field-name="richjobdescription__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Job_Disclaimers__c" field-name="Job_Disclaimers__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Insights__c" field-name="Insights__c"></lightning-input-field>
+          </div>
+        </div>
+       <!-- Print Details Edit Section -->
+       <template if:true={PrintDetails}>
+        <div class="slds-section slds-is-open">
+            <h3 class="slds-section__title slds-theme_shade">
+              <span class="slds-align_absolute-center" title="Section Title">
+                <b>Print Details</b>
+              </span>
+            </h3>
+          </div>
+        <div class="slds-grid">
+          <div style="float:left;padding-left: 2pc;width: 36%">
+            <lightning-input-field data-field-name="New_Print_Ad__c" field-name="New_Print_Ad__c"></lightning-input-field>
+            <lightning-input-field data-field-name="New_Outdoor__c" field-name="New_Outdoor__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Print_Revise__c" field-name="Print_Revise__c"></lightning-input-field>
+            <lightning-input-field data-field-name="New_LED_Signage__c" field-name="New_LED_Signage__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Color__c" field-name="Color__c"></lightning-input-field>
+            <lightning-input-field data-field-name="DestinationST__c" field-name="DestinationST__c"></lightning-input-field>
+          </div>
+          <div style="float:left; width: 64%;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field data-field-name="Newspaper__c" field-name="Newspaper__c"></lightning-input-field>
+            <lightning-input-field data-field-name="New_POS__c" field-name="New_POS__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tag_Information__c" field-name="Tag_Information__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Specs__c" field-name="Specs__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Dimensions__c" field-name="Dimensions__c"></lightning-input-field>
+          </div>
+          </p>
+        </div></template>
+        <!-- TV Details Edit Section -->
+       <template if:true={TVDetails}>
+        <div class="slds-section slds-is-open">
+            <h3 class="slds-section__title slds-theme_shade">
+              <span class="slds-align_absolute-center" title="Section Title">
+                <b>TV Details</b>
+              </span>
+            </h3>
+          </div>
+        <div class="slds-grid">
+          <div style="float:left;padding-left: 2pc;width: 36%">
+            <lightning-input-field data-field-name="Incentive_TV__c" field-name="Incentive_TV__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tactical_TV__c" field-name="Tactical_TV__c"></lightning-input-field>
+            <lightning-input-field data-field-name="TV_Shoot_Concept__c" field-name="TV_Shoot_Concept__c"></lightning-input-field>
+            <lightning-input-field data-field-name="TV_Shoot_Production__c" field-name="TV_Shoot_Production__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tagging__c" field-name="Tagging__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Length_of_Spots__c" field-name="Length_of_Spots__c"></lightning-input-field>
+          </div>
+          <div style="float:left; width: 64%;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field data-field-name="Length_of_Spots__c" field-name="Length_of_Spots__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Number_Of_Executions__c" field-name="Number_Of_Executions__c"></lightning-input-field>
+            <lightning-input-field data-field-name="DestinationST__c" field-name="DestinationST__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tag_Information__c" field-name="Tag_Information__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Context__c" field-name="Context__c"></lightning-input-field>
+          </div>
+          </p>
+        </div></template>
+        <!-- Radio Details Edit Section -->
+       <template if:true={RadioDetails}>
+        <div class="slds-section slds-is-open">
+            <h3 class="slds-section__title slds-theme_shade">
+              <span class="slds-align_absolute-center" title="Section Title">
+                <b>Radio Details</b>
+              </span>
+            </h3>
+          </div>
+        <div class="slds-grid">
+          <div style="float:left;padding-left: 2pc;width: 36%">
+            <lightning-input-field data-field-name="New_Radio_Ad__c" field-name="New_Radio_Ad__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Incentive_Radio__c" field-name="Incentive_Radio__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tagging__c" field-name="Tagging__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Number_Of_Executions__c" field-name="Number_Of_Executions__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Length_of_Spots__c" field-name="Length_of_Spots__c"></lightning-input-field>
+          </div>
+          <div style="float:left; width: 64%;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field data-field-name="Specs__c" field-name="Specs__c"></lightning-input-field>
+            <lightning-input-field data-field-name="DestinationST__c" field-name="DestinationST__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tag_Information__c" field-name="Tag_Information__c"></lightning-input-field>
+          </div>
+          </p>
+        </div></template>
+        <!-- Microsite Details Edit Section -->
+       <template if:true={MicrositeDetails}>
+        <div class="slds-section slds-is-open">
+            <h3 class="slds-section__title slds-theme_shade">
+              <span class="slds-align_absolute-center" title="Section Title">
+                <b>Microsite Details</b>
+              </span>
+            </h3>
+          </div>
+        <div class="slds-grid">
+          <div style="float:left;padding-left: 2pc;width: 36%">
+            <lightning-input-field data-field-name="Custom_URL_Needed__c" field-name="Custom_URL_Needed__c"></lightning-input-field>
+            <lightning-input-field data-field-name="URL_Purchase_Needed__c" field-name="URL_Purchase_Needed__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Accompanying_Media_Campa__c" field-name="Accompanying_Media_Campa__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Tags_Needed__c" field-name="Tags_Needed__c"></lightning-input-field>
+          </div>
+          <div style="float:left; width: 64%;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field data-field-name="Host__c" field-name="Host__c"></lightning-input-field>
+            <lightning-input-field data-field-name="If_Other__c" field-name="If_Other__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Email_Template__c" field-name="Email_Template__c"></lightning-input-field>
+            <lightning-input-field data-field-name="Campaign_Live_Date__c" field-name="Campaign_Live_Date__c"></lightning-input-field>
+          </div>
+          </p>
+        </div>
+      </template>
+      <h3 class="slds-section__title slds-theme_shade">
+        <span class="slds-align_absolute-center" title="Section Title">
+          <b>Production Notes</b>
+        </span>
+      </h3>
+      <div class="slds-grid" style="padding-left: 2pc;">
+        <div style="float:left;width: 50%;">
+        <lightning-input-field data-field-name="Review_Links__c" field-name="Review_Links__c"></lightning-input-field>
+        </div>
+        <div style="float:left;width: 50%;;padding-left: 2pc;padding-right: 2pc;">
+            <lightning-input-field data-field-name="Functional_Notes__c" field-name="Functional_Notes__c"></lightning-input-field>
+            </div> 
+        </div>
+        <h3 class="slds-section__title slds-theme_shade">
+          <span class="slds-align_absolute-center" title="Section Title">
+            <b>Schedule</b>
+          </span>
+        </h3>
+        <div class="slds-grid" style="padding-left: 2pc;"> 
+          <lightning-messages></lightning-messages>
+          <div style="float:left;width: 40%;">
+          <lightning-input-field data-field-name="Project_Request_Date__c" field-name="Project_Request_Date__c"></lightning-input-field>
+          <lightning-input-field data-field-name="Review_Date2__c" field-name="Review_Date2__c"></lightning-input-field>
+          <lightning-input-field data-field-name="Production_Date__c" field-name="Production_Date__c"></lightning-input-field>
+          <lightning-input-field data-field-name="Ship_Date__c" field-name="Ship_Date__c"></lightning-input-field>
+          <lightning-input-field data-field-name="Campaign_Live_Date__c" field-name="Campaign_Live_Date__c"></lightning-input-field>
+          </div>
+      <div style="float:left;width: 60%;;padding-left: 2pc;padding-right: 2pc;">
+          <lightning-input-field data-field-name="Review_Date__c" field-name="Review_Date__c"></lightning-input-field>
+          <lightning-input-field data-field-name="Comp_Review_Date__c" field-name="Comp_Review_Date__c"></lightning-input-field>
+          <lightning-input-field data-field-name="VG_Internal_Ship_Date__c" field-name="VG_Internal_Ship_Date__c"></lightning-input-field>
+          <lightning-input-field class = "live" onchange={handleJobLiveDateChange} data-field-name="Livedate__c" field-name="Livedate__c" required></lightning-input-field>
+          </div> 
+          </div>
+      
+  <div class="slds-section">
+    <h3 class="slds-section__title slds-theme_shade">
+    <span class="slds-align_absolute-center" title="Section Title"><b>Team</b></span>
+    </h3>
+    </div>
+      <div class="slds-grid">
+        <div style="float:left;padding-left: 2pc;width: 43%;">
+        <lightning-input-field data-field-name="Account__c" field-name="Account__c"></lightning-input-field>
+        </div>
+        <div style="float:left;width: 60%;;padding-left: 2pc;padding-right: 2pc;">
+        <lightning-input-field data-field-name="Internal_Operations__c" field-name="Internal_Operations__c"></lightning-input-field>
+        </div>
+        </div>
+<!-- Creative Section -->
+  <div class="slds-section">
+  <h3 class="slds-section__title slds-theme_shade">
+  <span class="slds-align_absolute-center" title="Section Title"><b>Creative</b></span>
+  </h3>
+  </div>
+  <div class="slds-grid">
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Executive_Creative_Director__c" field-name="Executive_Creative_Director__c"></lightning-input-field>
+    <lightning-input-field data-field-name="CreativeCoordinator__c" field-name="CreativeCoordinator__c"></lightning-input-field>
+    <lightning-input-field data-field-name="Art_Director__c" field-name="Art_Director__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Digital_Creative_Director__c" field-name="Digital_Creative_Director__c"></lightning-input-field>
+    <lightning-input-field data-field-name="Associate_Creative_Director__c" field-name="Associate_Creative_Director__c"></lightning-input-field>
+    <lightning-input-field data-field-name="Designer__c" field-name="Designer__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;padding-right: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Creative_Director__c" field-name="Creative_Director__c"></lightning-input-field>
+    <lightning-input-field data-field-name="Copywriter__c" field-name="Copywriter__c"></lightning-input-field>
+    <lightning-input-field data-field-name="Copy_Editor__c" field-name="Copy_Editor__c"></lightning-input-field>
+    </div>
+    </div>
+<!-- Production Section -->
+  <div class="slds-section slds-is-open">
+  <h3 class="slds-section__title slds-theme_shade">
+  <span class="slds-align_absolute-center" title="Section Title"><b>Production</b></span>
+  </h3>
+  </div>
+  <div class="slds-grid">
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Digital_Producer__c" field-name="Digital_Producer__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Producer__c" field-name="Producer__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;padding-right: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Production__c" field-name="Production__c"></lightning-input-field>
+    </div>
+    </div>
+<!-- Media Section -->
+  <div class="slds-section slds-is-open">
+  <h3 class="slds-section__title slds-theme_shade">
+  <span class="slds-align_absolute-center" title="Section Title"><b>Media</b></span>
+  </h3>
+  </div>
+  <div class="slds-grid">
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="Media_Lead__c" field-name="Media_Lead__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="iMediaLead__c" field-name="iMediaLead__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;padding-right: 2pc;width: 33.33%;">
+    <lightning-input-field data-field-name="iMedia_Coordinator__c" field-name="iMedia_Coordinator__c"></lightning-input-field>
+    </div>
+    </div>
+  <div class="slds-section slds-is-open">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-align_absolute-center" title="Section Title">
+        <b>Saatchi Billing</b>
+      </span>
+    </h3>
+  </div>
+  <div class="slds-grid" style="padding-left: 2pc;">
+    <lightning-messages></lightning-messages>
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+      <lightning-input-field data-field-name="Budget__c" field-name="Budget__c"></lightning-input-field>
+      <lightning-input-field data-field-name="Billable_Date__c" field-name="Billable_Date__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;width: 33.33%;">
+      <lightning-input-field data-field-name="Actual__c" field-name="Actual__c"></lightning-input-field>
+      <lightning-input-field data-field-name="PO__c" field-name="PO__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 2pc;padding-right: 2pc;width: 33.33%;">
+      <lightning-input-field data-field-name="Commission__c" field-name="Commission__c"></lightning-input-field>
+      <lightning-input-field class= "poa" onchange={handleJobPOATypeChange} data-field-name="POA_Type__c" field-name="POA_Type__c" required></lightning-input-field>
+    </div>
+  </div>
+  <div class="slds-section slds-is-open">
+    <h3 class="slds-section__title slds-theme_shade">
+      <span class="slds-align_absolute-center" title="Section Title">
+        <b>VG Billing</b>
+      </span>
+    </h3>
+  </div>
+  <div class="slds-grid">
+    <div style="float:left;padding-left: 2pc;padding-right: 1pc;width: 45%;">
+      <lightning-input-field data-field-name="Assign_to_VG__c" field-name="Assign_to_VG__c"></lightning-input-field>
+      <lightning-input-field data-field-name="Invoice_Month__c" field-name="Invoice_Month__c"></lightning-input-field>
+      <lightning-input-field data-field-name="VG_Points__c" field-name="VG_Points__c"></lightning-input-field>
+      <lightning-input-field data-field-name="VG_Billing__c" field-name="VG_Billing__c"></lightning-input-field>
+      <lightning-input-field data-field-name="VG_Cost__c" field-name="VG_Cost__c"></lightning-input-field>
+    </div>
+    <div style="float:left;padding-left: 1pc;padding-right: 2pc;width: 55%;">
+      <lightning-input-field data-field-name="Points_Estimate__c" field-name="Points_Estimate__c"></lightning-input-field>
+      <lightning-input-field data-field-name="VG_Job__c" field-name="VG_Job__c"></lightning-input-field>
+      <lightning-input-field data-field-name="Estimated_Cost__c" field-name="Estimated_Cost__c"></lightning-input-field>
+      <lightning-input-field data-field-name="VG_Invoice__c" field-name="VG_Invoice__c"></lightning-input-field>
+    </div>
+  </div>
+  <div class="slds-section slds-is-open">
+    <lightning-card icon-name="standard:contact" title="Related Jobs">
+        <lightning-datatable
+        key-field="Name"
+        data={JobRec}
+        hide-checkbox-column="true"
+        show-row-number-column="true"
+        columns={JobColumns}>
+        </lightning-datatable>
+    </lightning-card>
+  </div>
+</lightning-record-edit-form>
+<div slot="footer" class="slds-align_absolute-center">
+  <button class="slds-button slds-button_neutral" onclick={cancel}>Cancel</button>
+  <button class="slds-button slds-button_brand" onclick={cloneJob}>Save</button>
+  </div>
+</lightning-quick-action-panel>
+</template>
