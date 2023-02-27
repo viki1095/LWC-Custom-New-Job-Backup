@@ -1,0 +1,179 @@
+public class cloneJobCtrl {
+    @AuraEnabled(cacheable=true)
+    public static sobjectWrapper fetchSobject(Id RecordId)
+    {
+        sobjectWrapper osobjectWrapper = new sobjectWrapper();
+        osobjectWrapper.lstJob = [SELECT Name, Type__c,Livedate__c , Status__c  From Job__c 
+                                      WHERE Master_Job__c =: RecordId];
+        return osobjectWrapper;
+    }
+    
+    public class sobjectWrapper {
+        @AuraEnabled public List<Job__c> lstJob{get;set;}
+    }
+
+    @AuraEnabled
+    public static Id cloneJob(Job__c newJob, String oldRecord)
+    {
+        system.debug('newJob.. oldRecord'  + oldRecord);
+        system.debug('newJob..'  + newJob);
+        try 
+        {
+            Job__c newJobs = new Job__c();
+            newJobs.Name = newJob.Name;
+            newJobs.Status__c  = newJob.Status__c;
+            newJobs.Livedate__c = newJob.Livedate__c;
+            newJob.Master_Job__c  = newJob.Master_Job__c;
+            newJobs.Creativeconcept__c = newJob.Creativeconcept__c;
+            newJobs.iMedia_Request__c  = newJob.iMedia_Request__c;
+            newJobs.jobnumber__c = newJob.jobnumber__c;
+            newJobs.Region__c  = newJob.Region__c;
+            newJobs.Market__c = newJob.Market__c;
+            newJobs.TDA__c  = newJob.TDA__c;
+            newJobs.Working_Directory__c = newJob.Working_Directory__c;
+            newJobs.Mandatories__c  = newJob.Mandatories__c;
+            newJobs.Featured_Products__c = newJob.Featured_Products__c;
+         
+            newJobs.Type__c  = newJob.Type__c;
+            newJobs.Type_Other__c = newJob.Type_Other__c;
+            newJobs.richjobdescription__c = newJob.richjobdescription__c;
+            newJobs.Job_Disclaimers__c = newJob.Job_Disclaimers__c;
+            newJobs.Insights__c = newJob.Insights__c;
+         
+            newJobs.New_Print_Ad__c = newJob.New_Print_Ad__c;
+            newJobs.New_Outdoor__c = newJob.New_Outdoor__c;
+            newJobs.Print_Revise__c = newJob.Print_Revise__c;
+            newJobs.New_LED_Signage__c = newJob.New_LED_Signage__c;
+            newJobs.Color__c = newJob.Color__c;
+            newJobs.DestinationST__c = newJob.DestinationST__c;
+            
+            newJobs.Newspaper__c = newJob.Newspaper__c;
+            newJobs.New_POS__c = newJob.New_POS__c;
+            newJobs.Tag_Information__c = newJob.Tag_Information__c;
+            newJobs.Specs__c = newJob.Specs__c;
+            newJobs.Dimensions__c = newJob.Dimensions__c;
+            
+            newJobs.Incentive_TV__c = newJob.Incentive_TV__c;
+            newJobs.Tactical_TV__c = newJob.Tactical_TV__c;
+            newJobs.TV_Shoot_Concept__c = newJob.TV_Shoot_Concept__c;
+            newJobs.TV_Shoot_Production__c = newJob.TV_Shoot_Production__c;
+            newJobs.Tagging__c = newJob.Tagging__c;
+            newJobs.Length_of_Spots__c = newJob.Length_of_Spots__c;
+            
+            newJobs.Number_Of_Executions__c = newJob.Number_Of_Executions__c;
+            newJobs.Context__c = newJob.Context__c;
+            
+            newJobs.New_Radio_Ad__c = newJob.New_Radio_Ad__c;
+            newJobs.Incentive_Radio__c = newJob.Incentive_Radio__c;
+            
+            newJobs.DestinationST__c = newJob.DestinationST__c;
+            
+            newJobs.Custom_URL_Needed__c = newJob.Custom_URL_Needed__c;
+            newJobs.URL_Purchase_Needed__c = newJob.URL_Purchase_Needed__c;
+            newJobs.Accompanying_Media_Campa__c = newJob.Accompanying_Media_Campa__c;
+            newJobs.Tags_Needed__c = newJob.Tags_Needed__c;
+            
+            newJobs.Host__c = newJob.Host__c;
+            newJobs.If_Other__c = newJob.If_Other__c;
+            newJobs.Email_Template__c = newJob.Email_Template__c;
+            newJobs.Campaign_Live_Date__c = newJob.Campaign_Live_Date__c;
+            
+            newJobs.Review_Links__c = newJob.Review_Links__c;
+            newJobs.Functional_Notes__c = newJob.Functional_Notes__c;
+            
+            newJobs.Project_Request_Date__c = newJob.Project_Request_Date__c;
+            newJobs.Review_Date2__c = newJob.Review_Date2__c;
+            newJobs.Production_Date__c = newJob.Production_Date__c;
+            newJobs.Ship_Date__c = newJob.Ship_Date__c;
+            
+            newJobs.Review_Date__c = newJob.Review_Date__c;
+            newJobs.Comp_Review_Date__c = newJob.Comp_Review_Date__c;
+            newJobs.VG_Internal_Ship_Date__c = newJob.VG_Internal_Ship_Date__c;
+            
+            newJobs.Account__c = newJob.Account__c;
+            newJobs.Internal_Operations__c = newJob.Internal_Operations__c;
+            
+            newJobs.Executive_Creative_Director__c = newJob.Executive_Creative_Director__c;
+            newJobs.CreativeCoordinator__c = newJob.CreativeCoordinator__c;
+            newJobs.Art_Director__c = newJob.Art_Director__c;
+            
+            newJobs.Digital_Creative_Director__c = newJob.Digital_Creative_Director__c;
+            newJobs.Associate_Creative_Director__c = newJob.Associate_Creative_Director__c;
+            newJobs.Designer__c = newJob.Designer__c;
+            
+            newJobs.Creative_Director__c = newJob.Creative_Director__c;
+            newJobs.Copywriter__c = newJob.Copywriter__c;
+            newJobs.Copy_Editor__c = newJob.Copy_Editor__c;
+            
+            newJobs.Digital_Producer__c = newJob.Digital_Producer__c;
+            newJobs.Producer__c = newJob.Producer__c;
+            newJobs.Production__c = newJob.Production__c;
+            
+            newJobs.Media_Lead__c = newJob.Media_Lead__c;
+            newJobs.iMediaLead__c = newJob.iMediaLead__c;
+            newJobs.iMedia_Coordinator__c = newJob.iMedia_Coordinator__c;
+            
+            newJobs.Budget__c = newJob.Budget__c;
+            newJobs.Billable_Date__c = newJob.Billable_Date__c;
+            
+            newJobs.Actual__c = newJob.Actual__c;
+            newJobs.PO__c = newJob.PO__c;
+            
+            newJobs.Commission__c = newJob.Commission__c;
+            newJobs.POA_Type__c = newJob.POA_Type__c;
+            
+            newJobs.Assign_to_VG__c = newJob.Assign_to_VG__c;
+            newJobs.Invoice_Month__c = newJob.Invoice_Month__c;
+            newJobs.VG_Points__c = newJob.VG_Points__c;
+            newJobs.VG_Billing__c = newJob.VG_Billing__c;
+       //   newJobs.VG_Cost__c = newJob.VG_Cost__c;
+            
+            newJobs.Points_Estimate__c = newJob.Points_Estimate__c;
+            newJobs.VG_Job__c = newJob.VG_Job__c;
+       //   newJobs.Estimated_Cost__c = newJob.Estimated_Cost__c;
+            newJobs.VG_Invoice__c = newJob.VG_Invoice__c;
+            
+
+            insert newJob;
+            system.debug(' ..' + newJob.Id);
+           
+            List<Job__c> newJobList = new List<Job__c>();
+            List<Job__c> jobList = [SELECT Id, Name, Type__c,Livedate__c , Status__c,Region__c,Market__c,TDA__c,
+                                    Working_Directory__c,Mandatories__c,Featured_Products__c,Type_Other__c,
+                                    richjobdescription__c,Job_Disclaimers__c,Insights__c,Master_Job__c,
+                                    Creativeconcept__c,iMedia_Request__c,jobnumber__c,New_Print_Ad__c,
+                                    New_Outdoor__c,Print_Revise__c,New_LED_Signage__c,Color__c,
+                                    Newspaper__c,New_POS__c,Tag_Information__c,Dimensions__c,
+                                    Incentive_TV__c,Tactical_TV__c,TV_Shoot_Concept__c,TV_Shoot_Production__c,
+                                    Context__c,New_Radio_Ad__c,Incentive_Radio__c,Tagging__c,Number_Of_Executions__c,
+                                    Length_of_Spots__c,Specs__c,DestinationST__c,Custom_URL_Needed__c,
+                                    URL_Purchase_Needed__c,Accompanying_Media_Campa__c,Tags_Needed__c,Host__c,If_Other__c,
+                                    Email_Template__c,Campaign_Live_Date__c,Review_Links__c,Functional_Notes__c,
+                                    Project_Request_Date__c,Review_Date2__c,Production_Date__c,Ship_Date__c,
+                                    Review_Date__c,Comp_Review_Date__c,VG_Internal_Ship_Date__c,
+                                    Account__c,Internal_Operations__c,Executive_Creative_Director__c,
+                                    CreativeCoordinator__c,Art_Director__c,Digital_Creative_Director__c,
+                                    Associate_Creative_Director__c,Designer__c,Creative_Director__c,Copywriter__c,
+                                    Copy_Editor__c,Digital_Producer__c,Producer__c,Production__c,Media_Lead__c,
+                                    iMediaLead__c,iMedia_Coordinator__c,Budget__c,Billable_Date__c,Actual__c,
+                                    PO__c,Commission__c,POA_Type__c,Assign_to_VG__c,Invoice_Month__c,VG_Points__c,
+                                    VG_Billing__c,VG_Cost__c,Points_Estimate__c,VG_Job__c,Estimated_Cost__c,VG_Invoice__c 
+                                    From Job__c WHERE Master_Job__c =: oldRecord];
+            
+            for(Job__c jobRecord : jobList){
+                Job__c newJobRelatedRecords = jobRecord.clone(false, true);
+                newJobRelatedRecords.Master_Job__c  = newJob.Id;
+                newJobList.add(newJobRelatedRecords);
+            }
+            insert newJobList;
+            
+            return newJob.Id;
+        } 
+        catch (Exception error) 
+        {
+            throw new AuraHandledException(error.getMessage());
+        }
+    }
+
+
+}
