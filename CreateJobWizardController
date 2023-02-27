@@ -1,0 +1,86 @@
+public with sharing class CreateJobWizardController 
+{
+    @AuraEnabled
+    public static Id saveJob(Job__c newJob)
+    {
+        system.debug('newJob..'  + newJob.Field_R__c);
+        system.debug('newJob..'  + newJob);
+        try 
+        {
+            insert newJob;
+            
+            return newJob.Id;
+        } 
+        catch (Exception error) 
+        {
+            throw new AuraHandledException(error.getMessage());
+        }
+    }
+  
+    @AuraEnabled(cacheable=true)
+    public static List<User> fetchUsers(){
+        List<User> userlist = [Select Id,Name,Email from User WHERE isActive= True order by Name Asc];
+        return userlist;
+    }
+    @AuraEnabled(cacheable=true)
+    public static List<Market__c> fetchMarkets(){
+        List<Market__c> marketlist = [SELECT Id, Name FROM Market__c order by name ASC];
+        return marketlist;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<CampaignEventPlanning__c> fetchCampaign(){
+        List<CampaignEventPlanning__c> campaignlist = [SELECT Id, Name FROM CampaignEventPlanning__c order by CreatedDate DESC];
+        return campaignlist;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<Job__c> fetchMasterJob(){
+        List<Job__c> masterJoblist = [SELECT Id, Name FROM Job__c order by CreatedDate DESC limit 200];
+        return masterJoblist;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<Region__c> fetchRegion(){
+        List<Region__c> regionlist = [SELECT Id, Name FROM Region__c order by name ASC];
+        return regionlist;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<TDA__c> fetchTDA(){
+        List<TDA__c> TDAlist = [SELECT Id, Name FROM TDA__c order by name ASC];
+        return TDAlist;
+    }
+    
+    @AuraEnabled
+    public static List<User> getUserList(String typeOfUser) {
+        List<User> userlist = new List<User>();
+        // = [Select Id,Name,Email from User WHERE ProfileId IN ( SELECT Id FROM Profile WHERE UserType = 'Standard')];
+        if (typeOfUser == 'User')
+            userlist = [Select Id,Name,Email from User WHERE ProfileId IN ( SELECT Id FROM Profile WHERE UserType = 'Standard') AND IsActive = true order by Name Asc];
+        else if (typeOfUser == 'Partner User')
+            userlist = [Select Id,Name,Email from User WHERE Profile.Name = 'Partner Community' AND IsActive = true];
+        else if (typeOfUser == 'Customer Portal User')
+            userlist = [Select Id,Name,Email from User WHERE Profile.Name = 'Customer Portal User' AND IsActive = true];
+            
+        return userlist;
+    }
+    
+    /*@AuraEnabled
+    public static void validateName(String jobName)
+    {
+        try 
+        {
+            //if(!Pattern.matches('[A-z].*', jobName))
+            //{
+            //throw new CreateJobWizardControllerException('The Job Name should only contain characters.');
+            //}
+        } 
+        catch (Exception error) 
+        {
+            throw new AuraHandledException(error.getMessage());
+        }
+    }*/
+    
+    private class CreateJobWizardControllerException extends Exception {}
+}
