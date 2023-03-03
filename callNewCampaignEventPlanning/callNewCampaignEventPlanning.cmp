@@ -1,0 +1,43 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,lightning:actionOverride" access="global">
+    <aura:attribute name="isModalOpen" type="boolean" default="true"/>
+            <lightning:listView aura:id="listObjects"
+                        objectApiName="CampaignEventPlanning__c"
+                        rows="10"
+                        showSearchBar="true"
+                        showActionBar="true"
+                        enableInlineEdit="true"
+                        showRowLevelActions="true"
+                        />
+    
+        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+        <aura:if isTrue="{!v.isModalOpen}">
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">  
+                
+                <div class="slds-modal__container">
+<div class="slds-clearfix">
+<div class="slds-grid slds-grid_pull-padded-medium slds-float_right slds-m-bottom_small">
+<div class="slds-col slds-p-horizontal_medium">
+<lightning:layout horizontalAlign="spread" pullToBoundary="small">
+<lightning:layoutItem flexibility="grow">
+<lightning:buttonIcon 
+   onclick="{!c.onclick}" 
+   size="large" 
+   variant="bare-inverse" 
+   alternativeText="Close window" 
+   iconName="utility:close"/>
+</lightning:layoutItem>
+</lightning:layout>
+</div>
+</div>
+</div>
+    <!--Modal/Popup Box Body Starts here-->
+     <div class="slds-modal__content slds-p-vertical_xx-small" id="modal-content-id-1">
+ 	<c:newCampaign>
+    </c:newCampaign>
+     </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+</aura:component>
